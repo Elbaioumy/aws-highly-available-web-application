@@ -1,143 +1,127 @@
-# AWS Highly Available Web Application
+# Production-Grade Highly Available Web Application on AWS
 
-A production-style AWS architecture demonstrating **High Availability**, **Scalability**, **Security**, and **Monitoring** using AWS managed services.
-
----
-
-## 📖 Project Overview
-
-This project demonstrates how to deploy a highly available web application on AWS following cloud architecture best practices.
-
-The infrastructure is distributed across **two Availability Zones** to improve availability and fault tolerance.
-
-The solution includes:
-
-- Multi-AZ VPC Design
-- Public and Private Subnets
-- Internet Gateway
-- NAT Gateways
-- Application Load Balancer
-- Auto Scaling Group
-- Amazon EC2
-- Amazon RDS Multi-AZ
-- Amazon CloudFront
-- AWS WAF
-- Amazon Route 53
-- Amazon CloudWatch
-- Amazon SNS
-- AWS Systems Manager Session Manager
+A production-style web application deployed on AWS following the AWS Well-Architected Framework. The solution is designed to provide high availability, scalability, security, and operational excellence using managed AWS services.
 
 ---
 
-## 🏗️ Solution Architecture
+# 📖 Overview
+
+This project demonstrates the deployment of a production-grade web application on AWS using a highly available architecture distributed across two Availability Zones.
+
+The infrastructure follows AWS best practices by isolating application and database resources in private subnets while exposing only the Application Load Balancer to the internet.
+
+## Key Features
+
+- Multi-AZ deployment
+- Highly available architecture
+- Auto Scaling based on demand
+- Private EC2 instances
+- Multi-AZ Amazon RDS
+- Global content delivery with CloudFront
+- AWS WAF protection
+- Secure administration using Systems Manager Session Manager
+- CloudWatch monitoring with SNS notifications
+
+---
+
+# 🏗️ Solution Architecture
 
 ![Solution Architecture](architecture/solution-architecture.png)
 
 ---
 
-# ☁️ AWS Services Used
+# ☁️ AWS Services
 
 | Service | Purpose |
-|----------|----------|
-| Amazon VPC | Creates an isolated virtual network for the application. |
-| Public Subnets | Host internet-facing resources such as the Application Load Balancer and NAT Gateways. |
-| Private Application Subnets | Host the EC2 application servers securely without public IP addresses. |
-| Private Database Subnets | Host the Amazon RDS database instances. |
-| Internet Gateway | Provides internet connectivity for public resources. |
-| NAT Gateway | Allows private EC2 instances to access the internet securely. |
-| Amazon EC2 | Runs the Apache web application. |
-| Application Load Balancer | Distributes incoming traffic across multiple EC2 instances. |
-| Auto Scaling Group | Automatically scales EC2 instances based on demand. |
-| Amazon RDS (Multi-AZ) | Provides a highly available managed MySQL database. |
-| Amazon CloudFront | Delivers content globally with low latency. |
-| AWS WAF | Protects the application from common web attacks. |
-| Amazon Route 53 | Provides DNS management and routing. |
-| Amazon CloudWatch | Collects metrics and monitors AWS resources. |
-| Amazon SNS | Sends email notifications when alarms are triggered. |
-| AWS Systems Manager | Provides secure instance management without SSH. |
+|---------|---------|
+| Amazon VPC | Isolated network environment |
+| Public & Private Subnets | Secure network segmentation |
+| Internet Gateway | Internet connectivity |
+| NAT Gateway | Outbound internet access for private instances |
+| Application Load Balancer | Traffic distribution |
+| Auto Scaling Group | Automatic scaling |
+| Amazon EC2 | Application hosting |
+| Amazon RDS Multi-AZ | Highly available database |
+| Amazon CloudFront | Global content delivery |
+| AWS WAF | Web application protection |
+| Amazon Route 53 | DNS routing |
+| AWS Systems Manager | Secure instance access |
+| Amazon CloudWatch | Monitoring |
+| Amazon SNS | Alert notifications |
 
 ---
 
-# 🏛️ Architecture Overview
+# 🏛️ Architecture Components
 
-The solution is designed following AWS Well-Architected Framework best practices.
+## Networking
 
-The application is deployed across two Availability Zones to provide high availability and fault tolerance.
+- Amazon VPC
+- Two Availability Zones
+- Public and Private Subnets
+- Internet Gateway
+- NAT Gateways
+- Route Tables
 
-The Application Load Balancer distributes incoming traffic across EC2 instances running inside private application subnets.
+## Compute
 
-Amazon RDS is deployed in Multi-AZ mode to ensure database availability.
-
-CloudFront accelerates content delivery while AWS WAF protects the application from malicious requests.
-
-CloudWatch monitors infrastructure metrics and sends alerts through Amazon SNS.
-
-AWS Systems Manager Session Manager provides secure access to EC2 instances without opening SSH ports.
-
----
-
-# 🌐 Traffic Flow
-
-The following sequence describes how a user request travels through the architecture:
-
-1. The user accesses the application using a custom domain.
-2. Amazon Route 53 resolves the domain name.
-3. The request is routed to Amazon CloudFront.
-4. AWS WAF inspects incoming requests and filters malicious traffic.
-5. CloudFront forwards the request to the Application Load Balancer (ALB).
-6. The ALB distributes traffic across healthy EC2 instances in the private application subnets.
-7. EC2 instances communicate with Amazon RDS in the private database subnets when database access is required.
-8. The response is returned through the same path back to the user.
-
----
-
-# 🌍 Network Design
-
-The network architecture is deployed inside a single Amazon VPC spanning two Availability Zones.
-
-### Public Subnets
-
-- Application Load Balancer
-- NAT Gateway
-- Internet Gateway connectivity
-
-### Private Application Subnets
-
-- Amazon EC2 instances
+- Launch Template
 - Auto Scaling Group
+- Private EC2 Instances
+- Application Load Balancer
 
-### Private Database Subnets
+## Database
 
-- Amazon RDS Multi-AZ deployment
+- Amazon RDS MySQL (Multi-AZ)
 
-This design isolates application and database resources from direct internet access while allowing secure outbound internet connectivity through NAT Gateways.
+## Security
+
+- Security Groups
+- AWS WAF
+- Systems Manager Session Manager
+
+## Monitoring
+
+- Amazon CloudWatch
+- Amazon SNS
+
+---
+
+# 🔄 Request Flow
+
+1. User sends a request.
+2. Amazon Route 53 resolves the domain.
+3. Amazon CloudFront receives the request.
+4. AWS WAF filters malicious traffic.
+5. CloudFront forwards traffic to the Application Load Balancer.
+6. The ALB routes traffic to healthy EC2 instances.
+7. EC2 communicates with Amazon RDS when required.
+8. CloudWatch monitors resources and triggers SNS notifications when alarms are activated.
 
 ---
 
 # 🔒 Security
 
-The infrastructure follows AWS security best practices.
+The solution follows AWS security best practices.
 
-- EC2 instances do not have public IP addresses.
-- Database instances are deployed in private subnets.
-- Security Groups restrict traffic between ALB, EC2, and RDS.
-- AWS WAF protects the application from common web attacks.
-- AWS Systems Manager Session Manager is used instead of SSH.
+- Private EC2 instances without public IP addresses
+- Private Amazon RDS deployment
+- Security Groups controlling inbound and outbound traffic
+- AWS WAF protection against common web attacks
+- Secure administration using AWS Systems Manager Session Manager
+- NAT Gateways for secure outbound internet access
 
 ---
 
-# 📈 High Availability
+# 📈 High Availability & Scalability
 
-The application is designed for fault tolerance.
+The application is designed to remain available even during infrastructure failures.
 
 - Multi-AZ deployment
 - Application Load Balancer
 - Auto Scaling Group
 - Amazon RDS Multi-AZ
 - CloudFront global edge locations
-- NAT Gateway in each Availability Zone
-
-If one Availability Zone becomes unavailable, traffic is automatically routed to healthy resources in the remaining Availability Zone.
+- NAT Gateway per Availability Zone
 
 ---
 
@@ -147,105 +131,51 @@ If one Availability Zone becomes unavailable, traffic is automatically routed to
 
 ![Solution Architecture](architecture/solution-architecture.png)
 
----
-
-## VPC
+## Amazon VPC
 
 ![VPC](screenshots/network/vpc.png)
 
-## Subnets
-
-![Subnets](screenshots/network/subnets.png)
-
-## Route Tables
-
-![Route Tables](screenshots/network/route-tables.png)
-
-## Internet Gateway
-
-![Internet Gateway](screenshots/network/internet-gateway.png)
-
-## NAT Gateways
-
-![NAT Gateways](screenshots/network/nat-gateways.png)
-
----
-
 ## Application Load Balancer
 
-![Application Load Balancer](screenshots/compute/alb-overview.png)
-
-## ALB Listeners
-
-![ALB Listeners](screenshots/compute/alb-listeners.png)
+![ALB](screenshots/compute/alb-overview.png)
 
 ## Auto Scaling Group
 
-![Auto Scaling Group](screenshots/compute/autoscaling-group.png)
-
-## Launch Template
-
-![Launch Template](screenshots/compute/launch-template.png)
-
-## EC2 Instances
-
-![EC2 Instances](screenshots/compute/ec2-instances.png)
-
-## Target Group
-
-![Target Group](screenshots/compute/target-group-overview.png)
-
-## Target Group Health
-
-![Target Group Health](screenshots/compute/target-group-health.png)
-
----
+![ASG](screenshots/compute/autoscaling-group.png)
 
 ## Amazon RDS
 
-![Amazon RDS](screenshots/database/RDS.png)
+![RDS](screenshots/database/RDS.png)
 
----
-
-## CloudFront
+## Amazon CloudFront
 
 ![CloudFront](screenshots/application/cloudfront-distribution.png)
 
-## Route 53
-
-![Route53](screenshots/application/route53.png)
-
-## Application
-
-![Application](screenshots/application/application-homepage.png)
-
----
-
 ## AWS WAF
 
-![AWS WAF](screenshots/security/aws-waf.png)
+![WAF](screenshots/security/aws-waf.png)
 
-## ALB Security Group
-
-![ALB Security Group](screenshots/security/alb-security-group.png)
-
-## Application Security Group
-
-![Application Security Group](screenshots/security/app-security-group.png)
-
-## Database Security Group
-
-![Database Security Group](screenshots/security/db-security-group.png)
-
----
-
-## CloudWatch
+## Amazon CloudWatch
 
 ![CloudWatch](screenshots/monitoring/cloudwatch.png)
 
-## SNS
+---
 
-![SNS](screenshots/monitoring/sns-topic.png)
+# 📚 Learning Outcomes
+
+Through this project I gained hands-on experience with:
+
+- Designing Multi-AZ AWS architectures
+- Building secure VPC networking
+- Configuring Auto Scaling Groups
+- Deploying private EC2 instances
+- Configuring Application Load Balancers
+- Securing applications with AWS WAF
+- Deploying Multi-AZ Amazon RDS
+- Implementing CloudFront for content delivery
+- Monitoring infrastructure with CloudWatch
+- Sending notifications using Amazon SNS
+- Managing instances with Systems Manager Session Manager
 
 ---
 
@@ -256,6 +186,3 @@ If one Availability Zone becomes unavailable, traffic is automatically routed to
 - GitHub: https://github.com/Elbaioumy
 - LinkedIn: https://www.linkedin.com/in/mohamed-elbaioumy/
 
----
-
-⭐ If you found this project useful, consider giving it a star.
