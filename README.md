@@ -145,49 +145,107 @@ If one Availability Zone becomes unavailable, traffic is automatically routed to
 
 ## Solution Architecture
 
-![Architecture](architecture/solution-architecture.png)
-
-## VPC
-
-![VPC](screenshots/network/VPC.png)
-
-## Auto Scaling Group
-
-![ASG](screenshots/compute/autoscaling-group.png)
-
-## Application Load Balancer
-
-![ALB](screenshots/compute/alb-overview.png)
-
-## Amazon RDS
-
-![RDS](screenshots/database/RDS.png)
-
-## CloudFront
-
-![CloudFront](screenshots/application/CloudFront.png)
-
-## Route 53
-
-![Route53](screenshots/application/R53.png)
-
-## AWS WAF
-
-![WAF](screenshots/security/WAF.png)
-
-## CloudWatch
-
-![CloudWatch](screenshots/monitoring/CloudWatch.png)
+![Solution Architecture](architecture/solution-architecture.png)
 
 ---
 
-# 🚀 Future Improvements
+## VPC
 
-- Deploy the infrastructure using Terraform.
-- Implement a complete CI/CD pipeline using GitHub Actions.
-- Store application secrets in AWS Secrets Manager.
-- Use ACM with a custom domain for HTTPS.
-- Deploy the application using Amazon ECS or Amazon EKS.
+![VPC](screenshots/network/vpc.png)
+
+## Subnets
+
+![Subnets](screenshots/network/subnets.png)
+
+## Route Tables
+
+![Route Tables](screenshots/network/route-tables.png)
+
+## Internet Gateway
+
+![Internet Gateway](screenshots/network/internet-gateway.png)
+
+## NAT Gateways
+
+![NAT Gateways](screenshots/network/nat-gateways.png)
+
+---
+
+## Application Load Balancer
+
+![Application Load Balancer](screenshots/compute/alb-overview.png)
+
+## ALB Listeners
+
+![ALB Listeners](screenshots/compute/alb-listeners.png)
+
+## Auto Scaling Group
+
+![Auto Scaling Group](screenshots/compute/autoscaling-group.png)
+
+## Launch Template
+
+![Launch Template](screenshots/compute/launch-template.png)
+
+## EC2 Instances
+
+![EC2 Instances](screenshots/compute/ec2-instances.png)
+
+## Target Group
+
+![Target Group](screenshots/compute/target-group-overview.png)
+
+## Target Group Health
+
+![Target Group Health](screenshots/compute/target-group-health.png)
+
+---
+
+## Amazon RDS
+
+![Amazon RDS](screenshots/database/RDS.png)
+
+---
+
+## CloudFront
+
+![CloudFront](screenshots/application/cloudfront-distribution.png)
+
+## Route 53
+
+![Route53](screenshots/application/route53.png)
+
+## Application
+
+![Application](screenshots/application/application-homepage.png)
+
+---
+
+## AWS WAF
+
+![AWS WAF](screenshots/security/aws-waf.png)
+
+## ALB Security Group
+
+![ALB Security Group](screenshots/security/alb-security-group.png)
+
+## Application Security Group
+
+![Application Security Group](screenshots/security/app-security-group.png)
+
+## Database Security Group
+
+![Database Security Group](screenshots/security/db-security-group.png)
+
+---
+
+## CloudWatch
+
+![CloudWatch](screenshots/monitoring/cloudwatch.png)
+
+## SNS
+
+![SNS](screenshots/monitoring/sns-topic.png)
 
 ---
 
