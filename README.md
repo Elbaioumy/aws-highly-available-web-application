@@ -73,3 +73,131 @@ CloudFront accelerates content delivery while AWS WAF protects the application f
 CloudWatch monitors infrastructure metrics and sends alerts through Amazon SNS.
 
 AWS Systems Manager Session Manager provides secure access to EC2 instances without opening SSH ports.
+
+---
+
+# 🌐 Traffic Flow
+
+The following sequence describes how a user request travels through the architecture:
+
+1. The user accesses the application using a custom domain.
+2. Amazon Route 53 resolves the domain name.
+3. The request is routed to Amazon CloudFront.
+4. AWS WAF inspects incoming requests and filters malicious traffic.
+5. CloudFront forwards the request to the Application Load Balancer (ALB).
+6. The ALB distributes traffic across healthy EC2 instances in the private application subnets.
+7. EC2 instances communicate with Amazon RDS in the private database subnets when database access is required.
+8. The response is returned through the same path back to the user.
+
+---
+
+# 🌍 Network Design
+
+The network architecture is deployed inside a single Amazon VPC spanning two Availability Zones.
+
+### Public Subnets
+
+- Application Load Balancer
+- NAT Gateway
+- Internet Gateway connectivity
+
+### Private Application Subnets
+
+- Amazon EC2 instances
+- Auto Scaling Group
+
+### Private Database Subnets
+
+- Amazon RDS Multi-AZ deployment
+
+This design isolates application and database resources from direct internet access while allowing secure outbound internet connectivity through NAT Gateways.
+
+---
+
+# 🔒 Security
+
+The infrastructure follows AWS security best practices.
+
+- EC2 instances do not have public IP addresses.
+- Database instances are deployed in private subnets.
+- Security Groups restrict traffic between ALB, EC2, and RDS.
+- AWS WAF protects the application from common web attacks.
+- AWS Systems Manager Session Manager is used instead of SSH.
+
+---
+
+# 📈 High Availability
+
+The application is designed for fault tolerance.
+
+- Multi-AZ deployment
+- Application Load Balancer
+- Auto Scaling Group
+- Amazon RDS Multi-AZ
+- CloudFront global edge locations
+- NAT Gateway in each Availability Zone
+
+If one Availability Zone becomes unavailable, traffic is automatically routed to healthy resources in the remaining Availability Zone.
+
+---
+
+# 📷 Deployment Screenshots
+
+## Solution Architecture
+
+![Architecture](architecture/solution-architecture.png)
+
+## VPC
+
+![VPC](screenshots/network/VPC.png)
+
+## Auto Scaling Group
+
+![ASG](screenshots/compute/autoscaling-group.png)
+
+## Application Load Balancer
+
+![ALB](screenshots/compute/alb-overview.png)
+
+## Amazon RDS
+
+![RDS](screenshots/database/RDS.png)
+
+## CloudFront
+
+![CloudFront](screenshots/application/CloudFront.png)
+
+## Route 53
+
+![Route53](screenshots/application/R53.png)
+
+## AWS WAF
+
+![WAF](screenshots/security/WAF.png)
+
+## CloudWatch
+
+![CloudWatch](screenshots/monitoring/CloudWatch.png)
+
+---
+
+# 🚀 Future Improvements
+
+- Deploy the infrastructure using Terraform.
+- Implement a complete CI/CD pipeline using GitHub Actions.
+- Store application secrets in AWS Secrets Manager.
+- Use ACM with a custom domain for HTTPS.
+- Deploy the application using Amazon ECS or Amazon EKS.
+
+---
+
+# 👨‍💻 Author
+
+**Mohamed Ahmed Elbaioumy**
+
+- GitHub: https://github.com/Elbaioumy
+- LinkedIn: https://www.linkedin.com/in/mohamed-elbaioumy/
+
+---
+
+⭐ If you found this project useful, consider giving it a star.
