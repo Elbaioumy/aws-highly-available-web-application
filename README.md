@@ -1,26 +1,34 @@
 # AWS Highly Available Web Application
 
-A production-style AWS architecture designed with High Availability, Scalability, Security, and Monitoring best practices.
+A production-style AWS architecture demonstrating **High Availability**, **Scalability**, **Security**, and **Monitoring** using AWS managed services.
 
 ---
 
-## Architecture Diagram
+## 📖 Project Overview
+
+This project demonstrates how to deploy a highly available web application on AWS following cloud architecture best practices.
+
+The infrastructure is distributed across **two Availability Zones** to improve availability and fault tolerance.
+
+The solution includes:
+
+- Multi-AZ VPC Design
+- Public and Private Subnets
+- Internet Gateway
+- NAT Gateways
+- Application Load Balancer
+- Auto Scaling Group
+- Amazon EC2
+- Amazon RDS Multi-AZ
+- Amazon CloudFront
+- AWS WAF
+- Amazon Route 53
+- Amazon CloudWatch
+- Amazon SNS
+- AWS Systems Manager Session Manager
+
+---
+
+## 🏗️ Solution Architecture
 
 ![Solution Architecture](architecture/solution-architecture.png)
-
----
-
-## Project Overview
-
-This project demonstrates how to deploy a highly available web application on AWS using multiple Availability Zones and AWS managed services.
-
-The architecture provides:
-
-- High Availability
-- Scalability using Auto Scaling
-- Load Balancing
-- Secure Network Design
-- Content Delivery with CloudFront
-- Database High Availability using Amazon RDS Multi-AZ
-- Infrastructure Monitoring using CloudWatch
-- Secure instance management using AWS Systems Manager Session Manager
